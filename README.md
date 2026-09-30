@@ -15,6 +15,24 @@ score. It does not use a trained machine-learning model (see [Limitations](#limi
 
 ---
 
+## Live demo
+
+**<https://fake-profile-detection-iota.vercel.app>**
+
+No sign-up needed — pick a platform, enter a username or email and hit **Detect Now**.
+
+| Page | URL |
+|------|-----|
+| Home | `/` |
+| Email | `/email_page/` |
+| Instagram | `/instagram_page/` |
+| X (Twitter) | `/x_page/` |
+
+Hosted on [Vercel](https://vercel.com), auto-deployed from this repository on every push
+to `main`.
+
+---
+
 ## Quick start
 
 Requires **Python 3.9 – 3.12**.
@@ -155,4 +173,5 @@ Ideas for next steps:
   and compare it to the rule-based score.
 - Add behavioural features (posting cadence, follower growth, duplicate content).
 - Unify the meters and verdict wording across platforms.
-- Deploy with `gunicorn`, `DJANGO_DEBUG=False` and a real `DJANGO_SECRET_KEY`.
+- Harden the deployment: set a real `DJANGO_SECRET_KEY` in Vercel's environment
+  variables (the live site currently falls back to the development default).
