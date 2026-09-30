@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AuthentIQ - Home</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script defer src="{% static 'js/scripts.js' %}"></script>
+</head>
+<body class="dark-gradient">
+
+  <header class="header-section">
+    <h1 class="main-title">Welcome to AuthentIQ</h1>
+    <p class="sub-tag">Cross-platform fake profile detection built on real-time data, behavioral analysis, and platform-level signals — no fluff, just facts.</p>
+  </header>
+
+  <!-- About Fake Profiles -->
+  <section class="about-section">
+    <div class="about-box">
+      <h2>About Fake Profiles</h2>
+      <ul>
+        <li>Fake profiles impersonate people, brands, and bots to deceive users.</li>
+        <li>Used in scams, phishing, spam, and identity theft.</li>
+        <li>AI-generated identities are rising across social media.</li>
+        <li>AuthentIQ helps you detect and avoid these threats effectively.</li>
+        <li>Stay protected using platform-specific behavior analysis.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Platform Cards -->
+  <section class="offer-section">
+    <h2>What We Offer</h2>
+    <div class="offer-grid">
+      <div class="offer-box" onclick="location.href='{% url 'email_page' %}'">
+        <img src="{% static 'icons/emailicon.webp' %}" alt="Email">
+        <p>Email Detection</p>
+      </div>
+      <div class="offer-box" onclick="location.href='{% url 'instagram_page' %}'">
+        <img src="{% static 'icons/instagram.png' %}" alt="Instagram">
+        <p>Instagram Detection</p>
+      </div>
+      <div class="offer-box" onclick="location.href='{% url 'x_page' %}'">
+        <img src="{% static 'icons/x.png' %}" alt="X">
+        <p>X (Twitter) Detection</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Info Cards: Dangers, Identify, Avoid -->
+  <section class="info-cards">
+    <div class="info-box">
+      Dangers
+      <div class="hover-popup">
+        <ul>
+          <li>Phishing & Scams</li><li>Fake job offers</li><li>Identity Theft</li><li>Bot Attacks</li>
+          <li>Malware links</li><li>Catfishing</li><li>Political Propaganda</li><li>Account Hijack</li><li>Fraud Payments</li><li>Social Engineering</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box">
+      Identify
+      <div class="hover-popup">
+        <ul>
+          <li>Stock profile pictures</li><li>Generic bios</li><li>High follower/following mismatch</li>
+          <li>Zero activity</li><li>Suspicious usernames</li><li>Repeating patterns</li><li>AI-generated faces</li>
+          <li>Too good to be true posts</li><li>Link shorteners in bios</li><li>Comments full of emojis only</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box">
+      Avoid
+      <div class="hover-popup">
+        <ul>
+          <li>Don’t share OTPs</li><li>Use MFA</li><li>Block strange links</li><li>Verify profiles</li>
+          <li>Don’t install unknown files</li><li>Check reverse images</li><li>Report bots</li><li>Trust your gut</li><li>Use secure networks</li><li>Think before you click</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="education-section">
+    <div class="education-card">
+      Top 5 Signs an Email Account is Suspicious
+      <div class="hover-popup-card">
+        <ul>
+          <li>Uses misspelled domains</li>
+          <li>Urgent action or threats</li>
+          <li>Suspicious attachments</li>
+          <li>Fake support branding</li>
+          <li>Unusual login requests</li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="education-card">
+      How Instagram Bots Fake Engagement
+      <div class="hover-popup-card">
+        <ul>
+          <li>Repeated emoji comments</li>
+          <li>Fake likes from bots</li>
+          <li>Link in bio scams</li>
+          <li>Generic DMs</li>
+          <li>AI-generated photos</li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="education-card">
+      Twitter Scam Profiles: Real vs Fake
+      <div class="hover-popup-card">
+        <ul>
+          <li>Unrealistic usernames</li>
+          <li>Fake verified icons</li>
+          <li>Thread spam with links</li>
+          <li>AI-written tweets</li>
+          <li>Followers from bots</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 📊 Detection Graphs -->
+  <section class="graph-section">
+    <h2>Detection Stats (Live View)</h2>
+    <div class="graph-grid">
+      <div class="graph-card">
+        <img src="{% static 'icons/email_fake_vs_detected_profiles_full.gif' %}" alt="Email Graph">
+        <p>Email</p>
+      </div>
+      <div class="graph-card">
+        <img src="{% static 'icons/insta_profiles_animated.gif' %}" alt="Instagram Graph">
+        <p>Instagram</p>
+      </div>
+      <div class="graph-card">
+        <img src="{% static 'icons/x_profiles_animated.gif' %}" alt="X Graph">
+        <p>X (Twitter)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌍 Global Stats -->
+  <section class="stats-section">
+    <h2>Global User Statistics</h2>
+    <div class="counter-grid">
+      <div class="counter-card">
+        <p>Total Detected</p>
+        <span class="count" data-target="{{ total_count }}">0</span>
+      </div>
+      <div class="counter-card">
+        <p>Email</p>
+        <span class="count" data-target="{{ email_detector_count }}">0</span>
+      </div>
+      <div class="counter-card">
+        <p>Instagram</p>
+        <span class="count" data-target="{{ instagram_count }}">0</span>
+      </div>
+      <div class="counter-card">
+        <p>X (Twitter)</p>
+        <span class="count" data-target="{{ x_count }}">0</span>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 🔐 Security & Privacy -->
+  <section class="security-section">
+    <h2>Privacy & Detection Ethics</h2>
+    <div class="security-box">
+      <ul>
+        <li>We use **official APIs** where possible (e.g., Email OAuth, Twitter Bearer Token).</li>
+        <li>All scraping (if used) respects **robots.txt** and user consent.</li>
+        <li>No login credentials or private messages are ever stored.</li>
+        <li>Detection is done via **public metadata, follower ratios, and posting behavior**.</li>
+        <li>Data sent to backend is **encrypted**, and processed temporarily.</li>
+        <li>We follow academic and ethical standards for machine learning classification.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 👥 About Us -->
+  <section class="about-us">
+    <h2>About Us – Multi-Platform Fake Profile Detection</h2>
+    <div class="about-text">
+      <ul>
+        <li><strong>Who We Are:</strong> Cybersecurity team exposing fake accounts across Email, Instagram, and X.</li>
+        <li><strong>Our Purpose:</strong> Help individuals & investigators detect fake identities efficiently.</li>
+        <li><strong>How It Works:</strong> Account scoring via behavior tracking, AI & user metadata.</li>
+        <li><strong>Future:</strong> Adding LinkedIn, browser extensions & AI-based language detectors.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 AuthentIQ. Stay Safe Online!</p>
+  </footer>
+
+  <a href="#" class="back-to-top">↑</a>
+
+  <!-- Fullscreen Modal -->
+  <div id="imageModal" class="modal">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
+  <script>
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const closeBtn = document.querySelector(".close-btn");
+
+    document.querySelectorAll(".graph-card img").forEach(img => {
+      img.onclick = () => {
+        modal.style.display = "block";
+        modalImg.src = img.src;
+      };
+    });
+
+    closeBtn.onclick = () => { modal.style.display = "none"; };
+  </script>
+
+</body>
+</html>

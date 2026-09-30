@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fake Profile Detection System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .platform {
+            width: 150px;
+            height: 150px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #111827;
+            transition: transform 0.2s ease;
+        }
+        .platform:hover {
+            transform: scale(1.05);
+        }
+        .platform img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Fake Profile Detection System</h1>
+    <p>Select a platform to begin:</p>
+
+    <div class="platforms">
+        <a href="/email/detect/" class="platform">
+            <img src="/static/icons/gmail.png" alt="Gmail">
+            <span>Gmail</span>
+        </a>
+        <a href="/instagram/detect/" class="platform">
+            <img src="/static/icons/instagram.png" alt="Instagram">
+            <span>Instagram</span>
+        </a>
+        <a href="/x/detect/" class="platform">
+            <img src="/static/icons/x.png" alt="x">
+            <span>X/Twitter</span>
+        </a>
+    </div>
+</body>
+</html>

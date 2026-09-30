@@ -1,0 +1,79 @@
+/* Full background with Instagram-style gradient */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  backdrop-filter: brightness(0.85);
+}
+
+/* Container overlay with dark transparency */
+.overlay {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 30px 40px;
+  border-radius: 20px;
+  max-width: 900px;
+  width: 90%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+  text-align: center;
+}
+
+/* Title styling */
+.detect-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #fcdc04;
+  text-shadow: 2px 2px 8px #000000bb;
+}
+
+/* Info list styling */
+.detect-info ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+.detect-info ul li::before {
+  content: '📸';
+  margin-right: 10px;
+}
+
+.detect-info ul li {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+}
+
+/* Buttons container */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+/* Button styles */
+.detect-btn {
+  padding: 12px 26px;
+  font-weight: 700;
+  background-color: #405de6; /* Instagram blue */
+  color: white;
+  text-decoration: none;
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(64, 93, 230, 0.6);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.detect-btn:hover {
+  background-color: #5851db;
+  box-shadow: 0 7px 20px rgba(88, 81, 219, 0.9);
+  transform: translateY(-3px);
+}

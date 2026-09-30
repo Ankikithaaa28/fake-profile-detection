@@ -1,0 +1,1 @@
+default_app_config = 'fake_profile_backend.apps.FakeProfileBackendConfig'

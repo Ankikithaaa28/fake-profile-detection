@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twitter (X) Fake Profile Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            width: 70%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        img {
+            margin-top: 20px;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .result {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .fake {
+            color: red;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .real {
+            color: green;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .profile-data {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Twitter (X) Fake Profile Detection</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Enter Twitter username" required>
+            <br>
+            <button type="submit">Detect</button>
+        </form>
+
+        {% if error %}
+            <div class="error">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+
+        {% if result %}
+            <div class="result">
+                <img src="{{ result.user_data.profile_image_url }}" alt="Profile Picture">
+
+                <h2>@{{ result.username }}</h2>
+
+                {% if result.classification == 'Fake Profile' %}
+                    <p class="fake">{{ result.classification }}</p>
+                {% else %}
+                    <p class="real">{{ result.classification }}</p>
+                {% endif %}
+
+                <div class="profile-data">
+                    <p><strong>Fakeness Score:</strong> {{ result.fakeness_percentage }}%</p>
+                    <p><strong>Name:</strong> {{ result.user_data.name }}</p>
+                    <p><strong>Bio:</strong> {{ result.user_data.description }}</p>
+                    <p><strong>Followers:</strong> {{ result.user_data.followers_count }}</p>
+                    <p><strong>Following:</strong> {{ result.user_data.following_count }}</p>
+                    <p><strong>Tweets:</strong> {{ result.user_data.tweet_count }}</p>
+                    <p><strong>Account Created:</strong> {{ result.user_data.created_at }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+

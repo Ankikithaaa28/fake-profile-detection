@@ -1,0 +1,72 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url('../icons/detectpgimg2.webp'); 
+    background-size: cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    backdrop-filter: brightness(0.9);
+  }
+  
+  
+  .detect-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffe1f4;
+    text-shadow: 2px 2px 6px #000;
+    text-align: center;
+  }
+  
+ 
+  .detect-info {
+    background: rgba(0, 0, 0, 1.0);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    width: 90%;
+    text-align: center;
+  }
+  
+  .detect-info ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .detect-info ul li::before {
+    content: '🔹';
+    margin-right: 8px;
+  }
+  
+  .detect-info ul li {
+    margin: 8px 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  
+  .detect-btn {
+    display: inline-block;
+    margin: 20px 10px 0;
+    padding: 10px 20px;
+    font-weight: bold;
+    background-color: #7b2ff7;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .detect-btn:hover {
+    background-color: #a33cf0;
+    transform: translateY(-2px);
+  }
+

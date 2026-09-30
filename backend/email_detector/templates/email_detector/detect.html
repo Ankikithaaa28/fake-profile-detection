@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Fake Profile Detector 🔍</title>
+    <style>
+        body {
+             font-family: 'Segoe UI', sans-serif;
+             background: radial-gradient(circle at center, #a3c2d2 0%, #4a7b9c 80%);
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             padding: 20px;
+             margin: 0;
+             color: #333;
+}
+        .container {
+            width: 100%;
+            max-width: 600px; /* Adjusted for better readability */
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        form {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .form-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 500px; /* Limit width of form elements */
+        }
+        .form-row label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block; /* For stacking above inputs if needed */
+        }
+        .form-row input[type="text"], .form-row select {
+            padding: 12px; /* Increased padding */
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .form-row input[name="email_username"] {
+            flex-grow: 1;
+        }
+        .form-row select[name="email_domain"] {
+            min-width: 180px; /* Ensure select is wide enough */
+        }
+        /* Allow custom domain input */
+        .form-row input[name="custom_email_domain"] {
+            flex-grow: 1;
+        }
+        #customDomainInput {
+            width: 100%; /* Make custom domain input take full width of its container */
+            max-width: 300px; /* Match other inputs */
+            margin-top: 5px;
+        }
+
+        button[type="submit"] { /* More specific selector */
+            margin-top: 10px;
+            padding: 12px 25px; /* Increased padding */
+            font-size: 17px; /* Slightly larger font */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px; /* Increased padding */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 550px; /* Adjusted width */
+            text-align: left;
+            margin-top: 20px;
+        }
+        .status-real {
+            color: #2ecc71; /* Green */
+            font-weight: bold;
+        }
+        .status-fake {
+            color: #e74c3c; /* Red */
+            font-weight: bold;
+        }
+        .emoji {
+            font-size: 40px; /* Slightly larger emoji */
+            margin-bottom: 10px;
+            display: block; /* Center emoji if card is text-align:center */
+            text-align: center;
+        }
+        .result-card p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .result-card strong {
+            color: #555;
+        }
+
+        .fake-o-meter-container {
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .fake-o-meter-label {
+            font-weight: bold;
+            margin-bottom: 8px; /* Increased margin */
+            display: block;
+        }
+        .progress-bar-container {
+            background-color: #e0e0e0;
+            border-radius: 12px; /* Smoother radius */
+            overflow: hidden;
+            width: 100%;
+            height: 28px; /* Increased height */
+            box-shadow: inset 0 1px 3px rgba(214, 205, 205, 0.2);
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%; /* Start at 0 */
+            color: white;
+            text-align: center;
+            line-height: 28px; /* Match height */
+            font-weight: bold;
+            font-size: 14px;
+            transition: width 0.7s ease-in-out, background-color 0.7s ease-in-out;
+            background-color: #2ecc71; /* Default green */
+        }
+        #toggleExplanation { /* Style for the toggle button */
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 15px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block; /* Make it a block to center if needed */
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #toggleExplanation:hover {
+            background-color: #5a6268;
+        }
+        #explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background-color:rgb(194, 186, 186);
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        #explanation h4, #explanation h5 {
+            color: #333;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .check-item p {
+            margin-left: 15px;
+            font-size: 0.95em;
+        }
+        .result-card ul {
+            padding-left: 20px;
+            list-style-type: '👉 '; /* Fun list style */
+        }
+        .result-card ul li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 Email Fake Profile Detector</h1>
+
+        <form method="POST" action="{% url 'detect_email' %}"> {# Assuming you have a URL named 'detect_email' #}
+            {% csrf_token %}
+            <div class="form-row">
+                <label for="email_username_input">Email Address:</label>
+            </div>
+            <div class="form-row">
+                <input type="text" id="email_username_input" name="email_username" placeholder="username" required
+                       value="{{ request.POST.email_username|default:'' }}">
+                <select id="email_domain_select" name="email_domain" required>
+                {# Use request.POST directly to check the selected value #}
+                    <option value="@gmail.com" {% if request.POST.email_domain == "@gmail.com" or not request.POST.email_domain and not request.POST.custom_email_domain %}selected{% endif %}>@gmail.com</option>
+                    <option value="@yahoo.com" {% if request.POST.email_domain == "@yahoo.com" %}selected{% endif %}>@yahoo.com</option>
+                    <option value="@outlook.com" {% if request.POST.email_domain == "@outlook.com" %}selected{% endif %}>@outlook.com</option>
+                    <option value="@protonmail.com" {% if request.POST.email_domain == "@protonmail.com" %}selected{% endif %}>@protonmail.com</option>
+                    <option value="@rediffmail.com" {% if request.POST.email_domain == "@rediffmail.com" %}selected{% endif %}>@rediffmail.com</option>
+                    <option value="other" {% if request.POST.email_domain == "other" %}selected{% endif %}>Other...</option>
+                </select>
+            </div>
+            <div id="customDomainInputContainer" class="form-row" style="display: none; justify-content: center;">
+                <input type="text" id="customDomainInput" name="custom_email_domain" placeholder="Enter custom domain (e.g., mycompany.org)"
+                        value="{{ request.POST.custom_email_domain|default:'' }}">
+            </div>
+            <br>
+            <button type="submit">🔍 Detect Now</button>
+        </form>
+
+        {% if result %}
+        <div class="result-card">
+            <div class="emoji">{{ result.emoji|default:"📧" }}</div>
+            <p><strong>Email:</strong> {{ result.email|default:"N/A" }}</p>
+            <p><strong>Status:</strong>
+                {% if result.is_fake %}
+                    <span class="status-fake">Likely Fake/High-Risk</span>
+                {% else %}
+                    <span class="status-real">Appears Legitimate/Low-Risk</span>
+                {% endif %}
+            </p>
+            <p><strong>Verdict:</strong> {{ result.verdict|default:"N/A" }}</p>
+
+            {# Conditional display for Country/TLD Info or Provider Type #}
+            {% if result.is_trusted_provider %}
+                <p><strong>Provider Type:</strong> Global Trusted Provider</p>
+            {% elif result.country_tld_info and result.country_tld_info != "N/A" and "Unknown" not in result.country_tld_info %}
+                <p><strong>Country/TLD Info:</strong> {{ result.country_tld_info }}</p>
+            {% else %}
+                {# Optionally show something if neither of the above is true, or hide #}
+                <!-- <p><strong>Country/TLD Info:</strong> Not specified or generic</p> -->
+            {% endif %}
+
+           <!-- Fake-O-Meter -->
+            <div class="fake-o-meter-container">
+                <div class="fake-o-meter-label">Fake-O-Meter (Risk Level)</div>
+                <div class="progress-bar-container">
+                    <div id="progressBarFill" class="progress-bar-fill">
+                        <span id="progressText">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <p><strong>Total Penalty Score:</strong> {{ result.final_score|default:"0" }}</p>
+            <p><em>(Higher score indicates more suspicious characteristics)</em></p>
+
+
+            <button id="toggleExplanation" onclick="toggleExplanation()">🔍 View Email Analysis Details</button>
+
+            <div id="explanation" style="display: none;">
+                <h4>🕵️‍♂️ Profile Email Analysis: How We Check</h4>
+                <p>This detector uses a set of rules to analyze email characteristics. It's not foolproof but provides a good indication.</p>
+
+                <div class="check-item">
+                    <h5>1. Email Domain Check</h5>
+                    <p>We check if the domain is from a known trusted provider (e.g., Gmail, Outlook), a common provider, a known disposable (temporary) email service, or an uncommon/unknown domain.</p>
+                </div>
+                <div class="check-item">
+                    <h5>2. Email Format & Syntax</h5>
+                    <p>Ensures the email follows a valid structure (e.g., `username@domain.com`).</p>
+                </div>
+                <div class="check-item">
+                    <h5>3. MX Record Check</h5>
+                    <p>Verifies if the domain is configured to receive emails. Missing MX records are a strong indicator of a non-functional or fake email.</p>
+                </div>
+                <div class="check-item">
+                    <h5>4. Username Analysis</h5>
+                    <p>Looks for suspicious keywords (e.g., "temp", "spam"), unusual patterns (e.g., "aaaaa", "asdfasdf"), excessive numbers, or gibberish-like usernames.</p>
+                </div>
+                 <div class="check-item">
+                    <h5>5. TLD (Top-Level Domain) Check</h5>
+                    <p>Identifies the country or type associated with the domain extension (e.g., .com, .co.uk, .xyz). Some TLDs are more commonly used for spam.</p>
+                </div>
+
+                <h4>📊 Understanding the Fake-O-Meter & Verdict:</h4>
+                <p>The "Fake-O-Meter" percentage and verdict are based on the accumulated penalty points:</p>
+                <ul>
+                    <li><strong>0-39% (Low Risk / ✅):</strong> Appears legitimate. Few to no suspicious flags.</li>
+                    <li><strong>40-74% (Medium Risk / 🧐):</strong> Possibly suspicious. Some characteristics warrant caution.</li>
+                    <li><strong>75-100% (High Risk / 🚩):</strong> Very likely fake or high-risk. Multiple strong indicators found.</li>
+                </ul>
+                 <p>The "Total Penalty Score" shows the raw sum of penalties. A score of 0 is best.</p>
+            </div>
+
+            {% if result.reasons %}
+            <p><strong>Why tho? 🤔 (Specific Flags Raised):</strong></p>
+            <ul>
+                {% for reason in result.reasons %}
+                    <li>{{ reason }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handle "Other" domain selection
+            const domainSelect = document.getElementById('email_domain_select');
+            const customDomainContainer = document.getElementById('customDomainInputContainer');
+            const customDomainInput = document.getElementById('customDomainInput');
+
+            // Function to toggle custom domain input visibility
+            function toggleCustomDomain() {
+                if (domainSelect.value === 'other') {
+                    customDomainContainer.style.display = 'flex'; // Or 'block' depending on layout
+                    customDomainInput.required = true;
+                    customDomainInput.focus();
+                } else {
+                    customDomainContainer.style.display = 'none';
+                    customDomainInput.required = false;
+                    customDomainInput.value = ''; // Clear if hidden
+                }
+            }
+            // Initial check in case "Other" is pre-selected (e.g., from POST data)
+            toggleCustomDomain();
+            domainSelect.addEventListener('change', toggleCustomDomain);
+
+            // Progress bar logic
+            {% if result and result.score_percent_numeric %}
+                var scorePercent = parseFloat("{{ result.score_percent_numeric|default:0 }}");
+                var barFill = document.getElementById("progressBarFill");
+                var barText = document.getElementById("progressText");
+
+                if (barFill && barText && !isNaN(scorePercent)) {
+                    // Cap scorePercent at 100 for display
+                    var displayPercent = Math.min(scorePercent, 100);
+                    
+                    barFill.style.width = displayPercent + '%';
+                    barText.innerText = displayPercent.toFixed(0) + '%';
+
+                    if (scorePercent >= 75) { // High risk
+                        barFill.style.backgroundColor = "#e74c3c"; // red
+                    } else if (scorePercent >= 40) { // Medium risk
+                        barFill.style.backgroundColor = "#f1c40f"; // yellow
+                    } else { // Low risk
+                        barFill.style.backgroundColor = "#2ecc71"; // green
+                    }
+                }
+            {% endif %}
+        });
+
+        function toggleExplanation() {
+            const explanationDiv = document.getElementById("explanation");
+            const toggleButton = document.getElementById("toggleExplanation");
+            if (explanationDiv.style.display === "none") {
+                explanationDiv.style.display = "block";
+                toggleButton.innerText = "🔍 Hide Email Analysis Details";
+            } else {
+                explanationDiv.style.display = "none";
+                toggleButton.innerText = "🔍 View Email Analysis Details";
+            }
+        }
+    </script>
+</body>
+</html>

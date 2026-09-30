@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instagram Fake Profile Detector</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f1f3f5;
+            padding: 30px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            width: 100%;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .note {
+            margin-top: 12px;
+            font-size: 0.9em;
+            color: #6c757d;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Detect Fake Instagram Profiles</h1>
+    <form method="POST" action="{% url 'instagram:detect' %}">
+        {% csrf_token %}
+        <label for="username">Instagram Username:</label>
+        <input type="text" id="username" name="username" placeholder="e.g. john_doe123" required>
+
+        <button type="submit">Detect Profile</button>
+    </form>
+    <p class="note">We'll automatically fetch and analyze the profile details.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>X (Twitter) Detection</title>
+  <link rel="stylesheet" href="{% static 'css/xstyles.css' %}">
+</head>
+<body>
+  <!-- Background handled in CSS -->
+  <div class="overlay">
+    <h1 class="detect-title">X (Twitter) Fake Profile Detection</h1>
+    <div class="detect-info">
+      <ul>
+        <li>Fake X profiles retweet spam links from fake news outlets.</li>
+        <li>Usernames are often long or random with no real meaning.</li>
+        <li>Fake bios overuse hashtags and emojis to appear trendy.</li>
+        <li>Profile pictures are often avatars or celebrity photos.</li>
+        <li>Accounts may tweet controversial political spam or crypto bait.</li>
+        <li>Low-quality replies and retweets are a red flag.</li>
+        <li>They post inhumanly fast — hundreds of tweets per day.</li>
+        <li>Fake bots reply “DM me” under viral tweets to scam users.</li>
+        <li>They often impersonate journalists, agencies or influencers.</li>
+        <li>New accounts posting heavy opinion or promotions are suspicious.</li>
+        <li>AuthentIQ tracks reply/follow ratios, API behavior and tweet patterns.</li>
+        <li>We detect GPT/AI-written threads and reused tweet chains.</li>
+        <li>Many fake X profiles link to Telegram, adult or promo sites.</li>
+        <li>Imposter accounts use l instead of I, or 0 instead of o (e.g., ElonMu5k).</li>
+        <li>AuthentIQ flags suspicious behavior in real time.</li>
+      </ul>
+      <div class="btn-group">
+        <a href="/x/detect/" class="detect-btn">🚀 Detect Now</a>
+        <a href="/" class="detect-btn">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

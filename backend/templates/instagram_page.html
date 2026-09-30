@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Instagram Fake Profile Detection</title>
+  <link rel="stylesheet" href="{% static 'css/instagramstyles.css' %}" />
+</head>
+<body>
+  <!-- Background is handled in CSS -->
+  <div class="overlay">
+    <h1 class="detect-title">Instagram Fake Profile Detection</h1>
+    <div class="detect-info">
+      <ul>
+        <li>Fake profiles often have very few posts but thousands of followers.</li>
+        <li>Many use generic or stolen photos as profile pictures.</li>
+        <li>Bios are often empty or filled with spammy hashtags and links.</li>
+        <li>Fake accounts frequently follow and unfollow rapidly.</li>
+        <li>Comments may be repetitive or irrelevant spam.</li>
+        <li>Bot accounts often post at very high frequencies.</li>
+        <li>Look out for suspicious DMs asking for personal info or money.</li>
+        <li>AuthentIQ analyzes posting patterns, follower quality, and engagement.</li>
+        <li>Detects AI-generated captions and profile details.</li>
+        <li>Watch for impersonators copying popular accounts.</li>
+      </ul>
+      <div class="btn-group">
+        <a href="/instagram/detect/" class="detect-btn">🚀 Detect Now</a>
+        <a href="/" class="detect-btn">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

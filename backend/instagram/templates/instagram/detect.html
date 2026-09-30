@@ -1,0 +1,52 @@
+{% extends 'instagram/base_detect.html' %}
+
+{% block content %}
+{% if error %}
+    <h2>Error</h2>
+    <p>{{ error }}</p>
+    <a class="back-link" href="{% url 'instagram:home' %}">← Try another profile</a>
+{% else %}
+
+    <h2>Verdict: {{ profile_type }} {% if profile_type == 'Genuine' %}✅ Legit{% elif profile_type == 'Suspicious but Chill' %}😐 Kinda Sus{% else %}🚩 Fake{% endif %}</h2>
+
+    <p><strong>Username:</strong> <a href="https://instagram.com/{{ profile.username }}" target="_blank">@{{ profile.username }}</a></p>
+    <p><strong>Full Name:</strong> {{ profile.full_name }}</p>
+    <p><strong>Followers:</strong> {{ profile.followers }} | <strong>Following:</strong> {{ profile.following }}</p>
+    <p><strong>Posts:</strong> {{ profile.posts }}</p>
+    <p><strong>Bio:</strong> {{ profile.bio }}</p>
+
+    {% if geo %}
+    <p><strong>IP:</strong> {{ geo.ip }} | <strong>Location:</strong> {{ geo.location }}</p>
+    {% endif %}
+
+    <h3>🎯 Fake-O-Meter:</h3>
+    <div style="width: 100%; background: #eee; height: 20px; border-radius: 10px; overflow: hidden;">
+      <div style="height: 100%;
+                  width: {{ vibe_score.score }}%;
+                  background: linear-gradient(to right, #d50000, #ffeb3b, #00c853);
+                  text-align: center;
+                  color: black;
+                  font-weight: bold;">
+        {{ vibe_score.score }}%
+      </div>
+    </div>
+
+    <p style="font-style: italic; margin-top: 6px;">
+      {% if vibe_score.score >= 80 %}✅ Looks super real! 💯
+      {% elif vibe_score.score >= 50 %}🤔 Hmm... could be okay.
+      {% else %}🚩 Uh oh... major sus detected!
+      {% endif %}
+    </p>
+
+    <h3>{% if vibe_score.score >= 60 %}🧠 Real Vibes:{% else %}🚨 Red Flags:{% endif %}</h3>
+    <ul>
+      {% for reason in vibe_score.reasons %}
+      <li>{{ reason }}</li>
+      {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'instagram:home' %}">← Try another profile</a></p>
+
+{% endif %}
+{% endblock %}
+

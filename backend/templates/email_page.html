@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Suspicious Email Detection</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1.detect-title {
+      text-align: center;
+      font-size: 2.6rem;
+      margin: 40px 0 20px;
+      color: #00ffe7;
+      text-shadow: 0 0 10px #00ffe7;
+      animation: fadeInDown 1s ease;
+    }
+
+    .detect-info {
+      max-width: 900px;
+      margin: auto;
+      background-color: rgba(30, 30, 30, 0.9);
+      border: 1px solid #00ffe7;
+      border-radius: 12px;
+      padding: 35px;
+      box-shadow: 0 0 20px rgba(0, 255, 231, 0.2);
+      animation: fadeInUp 1.2s ease;
+    }
+
+    ul {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    li {
+      margin: 15px 0;
+      padding-left: 40px;
+      position: relative;
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+
+    li:hover {
+      transform: scale(1.02);
+    }
+
+    li::before {
+      content: "💡";
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+    }
+
+    li:nth-child(odd)::before { content: "⚠️"; }
+    li:nth-child(3n)::before { content: "🔍"; }
+    li:nth-child(5n)::before { content: "🎣"; }
+    li:nth-child(7n)::before { content: "📛"; }
+
+    .detect-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    a.detect-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 14px 24px;
+      font-size: 1.1rem;
+      color: #121212;
+      background-color: #00ffe7;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 0 10px #00ffe7;
+    }
+
+    a.detect-btn:hover {
+      background-color: #00bfa5;
+      transform: scale(1.05);
+    }
+
+    a.detect-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="detect-title">🚨 Suspicious Email Account Detection</h1>
+
+  <div class="detect-info">
+    <ul>
+      <li>Over 3.4 billion scam emails are sent *daily* — and rising.</li>
+      <li>Gmail, Yahoo, Outlook & even fake company domains are common.</li>
+      <li>Scammers often replace letters: e.g., `amaz0n.support@mail.com`.</li>
+      <li>Emails may look legit but use spoofed “display names” to trick you.</li>
+      <li>Phishing emails urge "urgent action" to bypass your critical thinking.</li>
+      <li>Most scams use attachments like invoices, resumes, or fake bills.</li>
+      <li>Cloned login pages steal your credentials without you realizing it.</li>
+      <li>🧠 Some scammers still use the “Nigerian prince” scheme — since 1988!</li>
+      <li>Check the sender domain — not just the name!</li>
+      <li>Fake support or CEO requests are often loaded with typos or odd tone.</li>
+      <li>Never download random files from unknown senders — especially `.zip`, `.exe`, or `.xlsm`.</li>
+      <li>Use 2FA (two-factor auth) — even if your email looks secure.</li>
+      <li>CAN-SPAM (USA) gives you legal right to opt out of emails.</li>
+      <li>GDPR (EU) protects users from deceptive or unsolicited messages.</li>
+      <li>India’s IT Act 2000 & UK’s Computer Misuse Act prohibit email fraud.</li>
+    </ul>
+
+    <div class="detect-buttons">
+      <a href="/email/detect/" class="detect-btn">🚀 Detect Now</a>
+      <a href="/" class="detect-btn">← Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>
