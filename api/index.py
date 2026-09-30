@@ -52,6 +52,20 @@ def _error_app(exc_text):
 try:
     from django.core.wsgi import get_wsgi_application
 
-    application = get_wsgi_application()
+    _django_app = get_wsgi_application()
 except Exception:  # noqa: BLE001 - surface the failure in the response body
+    _django_app = None
     application = _error_app(traceback.format_exc())
+
+
+if _django_app is not None:
+    def application(environ, start_response):
+        """WSGI wrapper that reports unhandled errors instead of a blank 500."""
+        try:
+            return _django_app(environ, start_response)
+        except Exception:  # noqa: BLE001
+            start_response(
+                "500 Internal Server Error",
+                [("Content-Type", "text/plain; charset=utf-8")],
+            )
+            return [traceback.format_exc().encode("utf-8", "replace")]
