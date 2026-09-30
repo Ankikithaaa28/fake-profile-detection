@@ -35,10 +35,6 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", default="dev-only-insecure-key-change-me")
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1", ".vercel.app", ".vercel.app/"])
 
-# TEMPORARY: let unhandled exceptions reach the WSGI entry point so the
-# failure is visible in the response body. Remove once deployment is stable.
-DEBUG_PROPAGATE_EXCEPTIONS = True
-
 # ---------------------------------------------------------------------------
 # Application definition
 # ---------------------------------------------------------------------------
