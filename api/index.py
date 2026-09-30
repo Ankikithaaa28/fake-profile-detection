@@ -1,10 +1,11 @@
 """
 Vercel serverless WSGI entry point for the Django application.
 
-The literal ``import backend.*`` lines below are never executed: they exist
-only so Vercel's file tracer sees the Django project and bundles it into the
-function. Without them the bundle only contains this file and Django fails
-to import at runtime.
+Vercel's Python builder requires a top-level variable named ``app``,
+``application`` or ``handler`` - it is assigned at the bottom of this module.
+
+The literal ``import backend.*`` lines are never executed: they exist only so
+the bundler sees the Django project and includes it in the function.
 """
 import os
 import sys
@@ -35,37 +36,23 @@ if False:  # pragma: no cover - static analysis only
     import backend.x.urls  # noqa: F401
     import backend.x.views  # noqa: F401
 
-
-def _error_app(exc_text):
-    """Return a WSGI app that prints the traceback instead of a blank 500."""
-
-    def application(environ, start_response):
-        start_response(
-            "500 Internal Server Error",
-            [("Content-Type", "text/plain; charset=utf-8")],
-        )
-        return [exc_text.encode("utf-8", "replace")]
-
-    return application
+from django.core.wsgi import get_wsgi_application  # noqa: E402
 
 
-try:
-    from django.core.wsgi import get_wsgi_application
+def _report_errors(wsgi_app):
+    """Wrap a WSGI app so unexpected errors print their traceback."""
 
-    _django_app = get_wsgi_application()
-except Exception:  # noqa: BLE001 - surface the failure in the response body
-    _django_app = None
-    application = _error_app(traceback.format_exc())
-
-
-if _django_app is not None:
-    def application(environ, start_response):
-        """WSGI wrapper that reports unhandled errors instead of a blank 500."""
+    def handler(environ, start_response):
         try:
-            return _django_app(environ, start_response)
+            return wsgi_app(environ, start_response)
         except Exception:  # noqa: BLE001
             start_response(
                 "500 Internal Server Error",
                 [("Content-Type", "text/plain; charset=utf-8")],
             )
             return [traceback.format_exc().encode("utf-8", "replace")]
+
+    return handler
+
+
+application = _report_errors(get_wsgi_application())
