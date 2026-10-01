@@ -31,6 +31,9 @@ No sign-up needed — pick a platform, enter a username or email and hit **Detec
 Hosted on [Vercel](https://vercel.com), auto-deployed from this repository on every push
 to `main`.
 
+`DJANGO_SECRET_KEY`, `DJANGO_DEBUG` and `DJANGO_ALLOWED_HOSTS` are stored as Vercel
+environment variables, so no secrets live in the repository.
+
 ---
 
 ## Quick start
@@ -173,5 +176,5 @@ Ideas for next steps:
   and compare it to the rule-based score.
 - Add behavioural features (posting cadence, follower growth, duplicate content).
 - Unify the meters and verdict wording across platforms.
-- Harden the deployment: set a real `DJANGO_SECRET_KEY` in Vercel's environment
-  variables (the live site currently falls back to the development default).
+- Move off SQLite: Vercel's filesystem is read-only and ephemeral, so the visit
+  counters reset on every deploy. A managed Postgres/Redis store would persist them.
